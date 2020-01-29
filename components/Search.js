@@ -1,8 +1,7 @@
 import React from 'react';
 import { Text, View, StyleSheet, TouchableHighlight, TextInput, FlatList, ActivityIndicator } from 'react-native';
+import Icon from 'react-native-vector-icons/EvilIcons';
 
-//var newData = [];
-//var isTyping = true;
 var textToSearch = '';
 var comicResponseArray = [];
 export default class Search extends React.Component {
@@ -11,7 +10,7 @@ export default class Search extends React.Component {
         searchString: '',
         isLoading: true,
         dataSource: [],
-        isSubmitPress: false
+        message:''
     }
 
     componentDidMount() {
@@ -24,7 +23,6 @@ export default class Search extends React.Component {
                     },
                     function () {
                         comicResponseArray = responseJson.comics;
-                        console.log(this.comicResponseArray);
                     }
                 );
             })
@@ -44,7 +42,16 @@ export default class Search extends React.Component {
                 const textData = text.toUpperCase();
                 return itemData.indexOf(textData) > -1;
             });
-            newData = newData.slice(0, 3);
+            if(newData.length == 0){
+                this.setState({
+                    message: 'No Result Found.',
+                });  
+            } else{
+                this.setState({
+                    message: '',
+                }); 
+                newData = newData.slice(0, 3);
+            }
         }
         this.setState({
             dataSource: newData,
@@ -60,7 +67,21 @@ export default class Search extends React.Component {
                 const textData = textToSearch.toUpperCase();
                 return itemData.indexOf(textData) > -1;
             });
-            newData = newData.slice(0, 10);
+            if(newData.length == 0){
+                this.setState({
+                    message: 'No Result Found.',
+                });  
+            } else{
+                this.setState({
+                    message: '',
+                }); 
+                newData = newData.slice(0, 10);
+            }
+        } else{
+            this.setState({
+                message: '',
+            }); 
+
         }
         this.setState({
             dataSource: newData,
@@ -92,17 +113,18 @@ export default class Search extends React.Component {
             <ActivityIndicator size='large' /> : null;
         return (
             <View style={styles.itemContainer}>
-                <Text style={styles.description}>Search for Comic Book</Text>
+                <Text style={styles.description}>Search for a Comic Book</Text>
                 <View style={styles.flowRight}>
+                    <Icon name='search' size={30} color='#48BBEC' />
                     <TextInput
-                        placeholder='Search'
+                        placeholder='Sreach'
+                        placeholderTextColor = '#48BBEC'
                         underlineColorAndroid={'transparent'}
                         style={styles.searchInput}
                         value={this.state.searchString}
                         autoFocus={true}
                         onChangeText={text => this._searchFilterFunction(text)}
                         onSubmitEditing={(e) => this._handleTextSubmit(e)} />
-
                 </View>
                 <FlatList
                     data={this.state.dataSource}
@@ -110,6 +132,7 @@ export default class Search extends React.Component {
                     renderItem={this._renderItem}
                     keyExtractor={this._keyExtractor}
                 />
+                <Text style = {styles.belowText}>{this.state.message}</Text>
                 {spinner}
             </View>
         );
@@ -153,16 +176,21 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     description: {
-        fontSize: 18,
+        fontSize: 20,
         textAlign: 'center',
         color: '#48BBEC',
         marginTop: 5,
+        fontWeight: 'bold'
     },
     flowRight: {
         flexDirection: 'row',
         alignItems: 'center',
         alignSelf: 'stretch',
         marginTop: 30,
+        borderWidth: 1,
+        borderColor: '#48BBEC',
+        borderRadius: 8,
+        paddingLeft: 5
     },
     searchInput: {
         height: 36,
@@ -170,9 +198,6 @@ const styles = StyleSheet.create({
         marginRight: 5,
         flexGrow: 1,
         fontSize: 18,
-        borderWidth: 1,
-        borderColor: '#48BBEC',
-        borderRadius: 8,
         color: '#48BBEC',
     },
     resultText: {
@@ -194,6 +219,14 @@ const styles = StyleSheet.create({
     separator: {
         height: 1,
         backgroundColor: '#dddddd'
+    },
+    belowText: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: '#48BBEC',
+        marginTop:100,
+        textAlign:"center",
+        alignSelf:"center",
     },
 
 });

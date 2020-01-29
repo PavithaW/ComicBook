@@ -1,6 +1,5 @@
 import React from 'react';
 import { Text, View, StyleSheet, TouchableHighlight, TextInput, FlatList, ActivityIndicator } from 'react-native';
-import KeyEvent from 'react-native-keyevent';
 
 //var newData = [];
 //var isTyping = true;
@@ -14,7 +13,7 @@ export default class Search extends React.Component {
         dataSource: [],
         isSubmitPress: false
     }
-    
+
     componentDidMount() {
         return fetch('https://api.shortboxed.com/comics/v1/new')
             .then(response => response.json())
@@ -38,6 +37,7 @@ export default class Search extends React.Component {
     _searchFilterFunction(text) {
         var newData = [];
         textToSearch = text;
+
         if (text.length > 2) {
             newData = comicResponseArray.filter(function (item) {
                 const itemData = item.title ? item.title.toUpperCase() : ''.toUpperCase();
@@ -52,16 +52,15 @@ export default class Search extends React.Component {
         })
     }
     _handleTextSubmit = event => {
-
         var newData = [];
-        
+
         if (textToSearch.length > 2) {
             newData = comicResponseArray.filter(function (item) {
                 const itemData = item.title ? item.title.toUpperCase() : ''.toUpperCase();
                 const textData = textToSearch.toUpperCase();
                 return itemData.indexOf(textData) > -1;
             });
-            newData = newData.slice(0, 10);   
+            newData = newData.slice(0, 10);
         }
         this.setState({
             dataSource: newData,
@@ -69,47 +68,47 @@ export default class Search extends React.Component {
         });
 
     }
-    _onPressItem = (index,item) => {
-        this.props.navigation.navigate('Details', {item: item});
-      }
+    _onPressItem = (index, item) => {
+        this.props.navigation.navigate('Details', { item: item });
+    }
 
     _renderItem = ({ item, index }) => (
         <ListItem
-            item = {item}
-            index = {index}
-            onPressItem = {this._onPressItem}
+            item={item}
+            index={index}
+            onPressItem={this._onPressItem}
         />
     );
     _keyExtractor = (item, index) => index.toString();
 
     ListViewItemSeparator = () => {
         return (
-          <View style = { styles.separator}/>
+            <View style={styles.separator} />
         );
-      };
+    };
 
     render() {
         const spinner = this.state.isLoading ?
             <ActivityIndicator size='large' /> : null;
         return (
-            <View style = {styles.itemContainer}>
-                <Text style = {styles.description}>Search for Comic Book</Text>
-                <View style = {styles.flowRight}>
+            <View style={styles.itemContainer}>
+                <Text style={styles.description}>Search for Comic Book</Text>
+                <View style={styles.flowRight}>
                     <TextInput
-                        placeholder = 'Search'
-                        underlineColorAndroid = {'transparent'}
-                        style = {styles.searchInput}
-                        value = {this.state.searchString}
-                        autoFocus = {true}
-                        onChangeText = {text => this._searchFilterFunction(text)}
+                        placeholder='Search'
+                        underlineColorAndroid={'transparent'}
+                        style={styles.searchInput}
+                        value={this.state.searchString}
+                        autoFocus={true}
+                        onChangeText={text => this._searchFilterFunction(text)}
                         onSubmitEditing={(e) => this._handleTextSubmit(e)} />
 
                 </View>
                 <FlatList
-                    data = {this.state.dataSource}
-                    ItemSeparatorComponent = {this.ListViewItemSeparator}
-                    renderItem = {this._renderItem}
-                    keyExtractor = {this._keyExtractor}
+                    data={this.state.dataSource}
+                    ItemSeparatorComponent={this.ListViewItemSeparator}
+                    renderItem={this._renderItem}
+                    keyExtractor={this._keyExtractor}
                 />
                 {spinner}
             </View>
@@ -125,13 +124,13 @@ class ListItem extends React.PureComponent {
         const item = this.props.item;
         return (
             <TouchableHighlight
-                onPress = {this._onPress}
-                underlayColor = '#dddddd'>
+                onPress={this._onPress}
+                underlayColor='#dddddd'>
                 <View>
-                    <View style = {styles.rowContainer}>
-                        <View style = {styles.textContainer}>
-                            <Text style = {styles.resultText}
-                                numberOfLines = {1}>{item.title}</Text>
+                    <View style={styles.rowContainer}>
+                        <View style={styles.textContainer}>
+                            <Text style={styles.resultText}
+                                numberOfLines={1}>{item.title}</Text>
                         </View>
                     </View>
                 </View>
@@ -188,8 +187,8 @@ const styles = StyleSheet.create({
     textContainer: {
         width: "100%",
         height: 50,
-        alignSelf:"center",
-        justifyContent:"center"
+        alignSelf: "center",
+        justifyContent: "center"
 
     },
     separator: {

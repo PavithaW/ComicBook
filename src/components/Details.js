@@ -2,13 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text, } from 'react-native';
 
 export default class Details extends React.Component {
-    // static navigationOptions =
-    //     {
-    //         title: 'Details',
-    //         headerStyle: {
-    //             backgroundColor: '#d0d0e1'
-    //         }
-    //     };
+
     render() {
         const { params } = this.props.navigation.state;
         const item = params.item;

@@ -1,4 +1,4 @@
-ComicBook Search
+# ComicBook Search
 
 ComicBook app allows users to search relavent comic by its title. It
 starts filtering results when 3 or more digits have been entered. Search
@@ -10,25 +10,29 @@ only. If the user wants to view details of certain comic, clicking on a
 search result will navigate to detail screen and shows comic title,
 description, price, publisher and release date.
 
-Getting Started
+## Getting Started
 
 This repository contains the source code for Comic Book Search app
 
-Prerequisites
+### Prerequisites
 
-install Node.js to the computer. Link: https://nodejs.org/en/download/
+install Node.js to the computer. Link: [https://nodejs.org/en/download/]https://nodejs.org/en/download/
 install expo-cli
 
-Installing
+### Installing
 
 1.  Clone the project to the computer git clone
+```
     git@github.com:PavithaW/ComicBook.git
+```
+2.  Go inside the project folder `cd project\_folder\_path/ComicBook/`
 
-2.  Go inside the project folder cd project\_folder\_path/ComicBook/
+3.  type following command to install node modules 
+```
+npm install
+```
 
-3.  type following command to install node module npm install
-
-4.  type following command to run the project on ios emulator npm run
-    ios
-
-
+4.  type following command to run the project on ios emulator. 
+```
+npm run ios
+```

@@ -3,7 +3,6 @@ import { Text, View, StyleSheet, TouchableHighlight, TextInput, FlatList, Activi
 import Icon from 'react-native-vector-icons/EvilIcons';
 import styles from '../Styles'
 
-var textToSearch = '';
 var comicResponseArray = [];
 
 export default class Search extends React.Component {
@@ -15,7 +14,7 @@ export default class Search extends React.Component {
             dataSource: [],
             message: ''
         }
-        //this.handleOnSearchTextChange = this.handleOnSearchTextChange.bind(this)
+        this._handleOnSearchTextChange = this._handleOnSearchTextChange.bind(this)
     }
 
     componentDidMount = () => {
@@ -40,62 +39,49 @@ export default class Search extends React.Component {
             });
     }
 
-    _searchFilterFunction(text) {
-        var newData = [];
-        textToSearch = text;
-
-        if (text.length > 2) {
-            newData = comicResponseArray.filter(function (item) {
-                const itemData = item.title ? item.title.toUpperCase() : ''.toUpperCase();
-                const textData = text.toUpperCase();
-                return itemData.indexOf(textData) > -1;
-            });
-            if (newData.length == 0) {
-                this.setState({
-                    message: 'No Result Found.',
-                });
-            } else {
-                this.setState({
-                    message: '',
-                });
-                newData = newData.slice(0, 3);
-            }
-        }
-        this.setState({
-            dataSource: newData,
-            searchString: text,
-        })
-    }
-    _handleTextSubmit = event => {
-        var newData = [];
-
-        if (textToSearch.length > 2) {
-            newData = comicResponseArray.filter(function (item) {
-                const itemData = item.title ? item.title.toUpperCase() : ''.toUpperCase();
-                const textData = textToSearch.toUpperCase();
-                return itemData.indexOf(textData) > -1;
-            });
-            if (newData.length == 0) {
-                this.setState({
-                    message: 'No Result Found.',
-                });
-            } else {
-                this.setState({
-                    message: '',
-                });
-                newData = newData.slice(0, 10);
-            }
-        } else {
-            this.setState({
-                message: '',
-            });
-
-        }
-        this.setState({
-            dataSource: newData,
-            searchString: textToSearch,
+    _handleOnSearchTextChange = async event => {
+        await this.setState({
+            searchString: event
         });
 
+        await this.searchFilterFunction();
+    }
+
+    _handleOnSearchTextChange = async event => {
+        await this.setState({
+            searchString: event
+        });
+
+        await this._searchFilterFunction(3);
+    }
+    _handleOnSubmit = () => {
+        this._searchFilterFunction(10);
+    }
+    _searchFilterFunction = (count) => {
+        const {
+            searchString,
+        } = this.state
+
+        let newData = [];
+        /* Lunar is the best third party library for full textsearching. But here I use normal source due to test requirements */
+        if (searchString.length > 2) {
+            newData = comicResponseArray.filter(function (item) {
+                const itemData = item.title ? item.title.toUpperCase() : ''.toUpperCase();
+                const textData = searchString.toUpperCase();
+                return itemData.indexOf(textData) > -1;
+            });
+            if (newData.length == 0) {
+                this.setState({
+                    message: 'No Result Found.',
+                });
+            } else {
+                newData = newData.slice(0, count);
+                this.setState({
+                    message: '',
+                    dataSource: newData
+                });
+            }
+        }
     }
     _onPressItem = (index, item) => {
         this.props.navigation.navigate('BookDetails', { item: item });
@@ -115,7 +101,7 @@ export default class Search extends React.Component {
             <View style={styles.separator} />
         );
     };
-
+    
     render() {
         const spinner = this.state.isLoading ?
             <ActivityIndicator size='large' /> : null;
@@ -133,8 +119,8 @@ export default class Search extends React.Component {
                         autoFocus={true}
                         autoCorrect={false}
                         ref={ref => { this.nameInput = ref }}
-                        onChangeText={text => this._searchFilterFunction(text)}
-                        onSubmitEditing={(e) => this._handleTextSubmit(e)} />
+                        onChangeText={this._handleOnSearchTextChange}
+                        onSubmitEditing={(e) => this._handleOnSubmit(e)} />
                 </View>
                 <FlatList
                     data={this.state.dataSource}

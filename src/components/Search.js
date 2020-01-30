@@ -115,10 +115,10 @@ export default class Search extends React.Component {
             <View style={styles.itemContainer}>
                 <Text style={styles.description}>Search for a Comic Book</Text>
                 <View style={styles.flowRight}>
-                    <Icon name='search' size={30} color='#48BBEC' />
+                    <Icon name='search' size={30} color='#4a4948' />
                     <TextInput
                         placeholder='Sreach'
-                        placeholderTextColor = '#48BBEC'
+                        placeholderTextColor = '#4a4948'
                         underlineColorAndroid={'transparent'}
                         style={styles.searchInput}
                         value={this.state.searchString}
@@ -163,12 +163,9 @@ class ListItem extends React.PureComponent {
 }
 
 const styles = StyleSheet.create({
-    title: {
-        fontSize: 48,
-        color: '#fff'
-    },
+
     itemContainer: {
-        backgroundColor: '#1F1C2C',
+        backgroundColor: '#f0edeb',
         width: '100%',
         height: '100%',
         padding: 30,
@@ -178,7 +175,7 @@ const styles = StyleSheet.create({
     description: {
         fontSize: 20,
         textAlign: 'center',
-        color: '#48BBEC',
+        color: '#4a4948',
         marginTop: 5,
         fontWeight: 'bold'
     },
@@ -188,20 +185,21 @@ const styles = StyleSheet.create({
         alignSelf: 'stretch',
         marginTop: 30,
         borderWidth: 1,
-        borderColor: '#48BBEC',
+        borderColor: '#4a4948',
         borderRadius: 8,
-        paddingLeft: 5
+        paddingLeft: 5,
+        marginBottom:10
     },
     searchInput: {
-        height: 36,
+        height: 50,
         padding: 4,
         marginRight: 5,
         flexGrow: 1,
         fontSize: 18,
-        color: '#48BBEC',
+        color: '#4a4948',
     },
     resultText: {
-        color: "#e7ebc3",
+        color: "#4a4948",
         fontSize: 14,
         textAlign: 'left',
     },
@@ -218,12 +216,12 @@ const styles = StyleSheet.create({
     },
     separator: {
         height: 1,
-        backgroundColor: '#dddddd'
+        backgroundColor: '#4a4948'
     },
     belowText: {
         fontSize: 18,
         fontWeight: 'bold',
-        color: '#48BBEC',
+        color: '#4a4948',
         marginTop:100,
         textAlign:"center",
         alignSelf:"center",

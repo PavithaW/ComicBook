@@ -38,7 +38,7 @@ export default class Details extends React.Component {
 }
 const styles = StyleSheet.create({
     itemContainer: {
-        backgroundColor: '#1F1C2C',
+        backgroundColor: '#f0edeb',
         width: '100%',
         height: '100%',
         padding: 20,
@@ -63,21 +63,21 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 24,
         fontWeight: 'bold',
-        color: '#48BBEC'
+        color: '#4a4948'
     },
     subtitle: {
         fontSize: 16,
-        color: '#ffffff'
+        color: '#4a4948'
     },
     key: {
         fontSize: 16,
         fontWeight: 'bold',
-        color: '#ffffff',
+        color: '#4a4948',
         width: "40%"
     },
     value: {
         fontSize: 16,
-        color: '#ffffff',
+        color: '#4a4948',
         width: "60%",
         alignSelf:"flex-start"
     },

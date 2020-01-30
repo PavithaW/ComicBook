@@ -1,19 +1,28 @@
 import React from 'react';
 import { Text, View, StyleSheet, TouchableHighlight, TextInput, FlatList, ActivityIndicator } from 'react-native';
 import Icon from 'react-native-vector-icons/EvilIcons';
+import styles from '../Styles'
 
 var textToSearch = '';
 var comicResponseArray = [];
-export default class Search extends React.Component {
 
-    state = {
-        searchString: '',
-        isLoading: true,
-        dataSource: [],
-        message:''
+export default class Search extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            searchString: '',
+            isLoading: true,
+            dataSource: [],
+            message: ''
+        }
+        //this.handleOnSearchTextChange = this.handleOnSearchTextChange.bind(this)
     }
 
-    componentDidMount() {
+    componentDidMount = () => {
+        this._fetchData();
+    }
+
+    _fetchData = () => {
         return fetch('https://api.shortboxed.com/comics/v1/new')
             .then(response => response.json())
             .then(responseJson => {
@@ -29,7 +38,6 @@ export default class Search extends React.Component {
             .catch(error => {
                 console.error(error);
             });
-
     }
 
     _searchFilterFunction(text) {
@@ -42,14 +50,14 @@ export default class Search extends React.Component {
                 const textData = text.toUpperCase();
                 return itemData.indexOf(textData) > -1;
             });
-            if(newData.length == 0){
+            if (newData.length == 0) {
                 this.setState({
                     message: 'No Result Found.',
-                });  
-            } else{
+                });
+            } else {
                 this.setState({
                     message: '',
-                }); 
+                });
                 newData = newData.slice(0, 3);
             }
         }
@@ -67,20 +75,20 @@ export default class Search extends React.Component {
                 const textData = textToSearch.toUpperCase();
                 return itemData.indexOf(textData) > -1;
             });
-            if(newData.length == 0){
+            if (newData.length == 0) {
                 this.setState({
                     message: 'No Result Found.',
-                });  
-            } else{
+                });
+            } else {
                 this.setState({
                     message: '',
-                }); 
+                });
                 newData = newData.slice(0, 10);
             }
-        } else{
+        } else {
             this.setState({
                 message: '',
-            }); 
+            });
 
         }
         this.setState({
@@ -90,7 +98,7 @@ export default class Search extends React.Component {
 
     }
     _onPressItem = (index, item) => {
-        this.props.navigation.navigate('Details', { item: item });
+        this.props.navigation.navigate('BookDetails', { item: item });
     }
 
     _renderItem = ({ item, index }) => (
@@ -118,11 +126,13 @@ export default class Search extends React.Component {
                     <Icon name='search' size={30} color='#4a4948' />
                     <TextInput
                         placeholder='Sreach'
-                        placeholderTextColor = '#4a4948'
+                        placeholderTextColor='#4a4948'
                         underlineColorAndroid={'transparent'}
                         style={styles.searchInput}
                         value={this.state.searchString}
                         autoFocus={true}
+                        autoCorrect={false}
+                        ref={ref => { this.nameInput = ref }}
                         onChangeText={text => this._searchFilterFunction(text)}
                         onSubmitEditing={(e) => this._handleTextSubmit(e)} />
                 </View>
@@ -132,7 +142,7 @@ export default class Search extends React.Component {
                     renderItem={this._renderItem}
                     keyExtractor={this._keyExtractor}
                 />
-                <Text style = {styles.belowText}>{this.state.message}</Text>
+                <Text style={styles.belowText}>{this.state.message}</Text>
                 {spinner}
             </View>
         );
@@ -142,7 +152,6 @@ class ListItem extends React.PureComponent {
     _onPress = () => {
         this.props.onPressItem(this.props.index, this.props.item);
     }
-
     render() {
         const item = this.props.item;
         return (
@@ -161,70 +170,3 @@ class ListItem extends React.PureComponent {
         );
     }
 }
-
-const styles = StyleSheet.create({
-
-    itemContainer: {
-        backgroundColor: '#f0edeb',
-        width: '100%',
-        height: '100%',
-        padding: 30,
-        flex: 1,
-        alignItems: 'center'
-    },
-    description: {
-        fontSize: 20,
-        textAlign: 'center',
-        color: '#4a4948',
-        marginTop: 5,
-        fontWeight: 'bold'
-    },
-    flowRight: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        alignSelf: 'stretch',
-        marginTop: 30,
-        borderWidth: 1,
-        borderColor: '#4a4948',
-        borderRadius: 8,
-        paddingLeft: 5,
-        marginBottom:10
-    },
-    searchInput: {
-        height: 50,
-        padding: 4,
-        marginRight: 5,
-        flexGrow: 1,
-        fontSize: 18,
-        color: '#4a4948',
-    },
-    resultText: {
-        color: "#4a4948",
-        fontSize: 14,
-        textAlign: 'left',
-    },
-    rowContainer: {
-        color: "#e7ebc3",
-        flexDirection: 'row',
-    },
-    textContainer: {
-        width: "100%",
-        height: 50,
-        alignSelf: "center",
-        justifyContent: "center"
-
-    },
-    separator: {
-        height: 1,
-        backgroundColor: '#4a4948'
-    },
-    belowText: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        color: '#4a4948',
-        marginTop:100,
-        textAlign:"center",
-        alignSelf:"center",
-    },
-
-});

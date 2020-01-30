@@ -3,7 +3,7 @@ import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from '../../node_modules/react-navigation-stack';
 
 import Search from '../components/Search'
-import Details from '../components/Details'
+import BookDetails from '../components/BookDetails'
 
 const AppNavigator = createStackNavigator({
     Search: {
@@ -16,10 +16,10 @@ const AppNavigator = createStackNavigator({
               },
           }
     },
-    Details: {
-        screen: Details,
+    BookDetails: {
+        screen: BookDetails,
         navigationOptions: {
-            title: 'Details',
+            title: 'Book Details',
             headerBackTitle: 'Back',
             headerTintColor:'#000000',
             headerStyle: {

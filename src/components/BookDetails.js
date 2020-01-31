@@ -1,27 +1,27 @@
 import React from 'react';
-import { StyleSheet, ScrollView,View, Text, } from 'react-native';
+import { StyleSheet, ScrollView, View, Text, } from 'react-native';
 
 const BookDetails = props => {
 
-        const { params } = props.navigation.state;
-        const item = params.item;
-        return (
-            <View style={styles.itemContainer}>
-                <ScrollView style={styles.rowContainer}>
-                    <View style={styles.textContainer}>
-                        <Text numberOfLines={2} style={styles.title}>{item.title}</Text>
-                    </View>
-                    <View style={styles.descContainer}>
-                        <Text style={styles.subtitle}>{item.description}</Text>
-                    </View>
-                    <View style={styles.dataContainer}>
-                        {TextViewData("Price:", item.price)}
-                        {TextViewData("Publisher:", item.publisher)}
-                        {TextViewData("Release Date:", item.release_date)}
-                    </View>
-                </ScrollView>
-            </View>
-        );
+    const { params } = props.navigation.state;
+    const item = params.item;
+    return (
+        <View style={styles.itemContainer}>
+            <ScrollView style={styles.rowContainer}>
+                <View style={styles.textContainer}>
+                    <Text numberOfLines={2} style={styles.title}>{item.title}</Text>
+                </View>
+                <View style={styles.descContainer}>
+                    <Text style={styles.subtitle}>{item.description}</Text>
+                </View>
+                <View style={styles.dataContainer}>
+                    {TextViewData("Price:", item.price)}
+                    {TextViewData("Publisher:", item.publisher)}
+                    {TextViewData("Release Date:", item.release_date)}
+                </View>
+            </ScrollView>
+        </View>
+    );
 }
 const TextViewData = (text, value) => {
     return (

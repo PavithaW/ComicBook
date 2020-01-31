@@ -10,22 +10,22 @@ const AppNavigator = createStackNavigator({
         screen: Search,
         navigationOptions: {
             title: 'Search',
-            headerTintColor:'#000000',
+            headerTintColor: '#000000',
             headerStyle: {
                 backgroundColor: '#f0edeb'
-              },
-          }
+            },
+        }
     },
     BookDetails: {
         screen: BookDetails,
         navigationOptions: {
             title: 'Book Details',
             headerBackTitle: 'Back',
-            headerTintColor:'#000000',
+            headerTintColor: '#000000',
             headerStyle: {
                 backgroundColor: '#f0edeb'
-              },
-          }
+            },
+        }
     },
 });
 

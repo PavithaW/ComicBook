@@ -54,7 +54,7 @@ export default class Search extends React.Component {
         } = this.state
 
         let newData = [];
-        /* Lunar is the best third party library for full textsearching. But here I use normal source due to test requirements */
+        /* Lunr is the best third party library for full textsearching. But here I use normal source due to test requirements */
         if (searchString.length > 2) {
             newData = comicResponseArray.filter(function (item) {
                 const itemData = item.title ? item.title.toUpperCase() : ''.toUpperCase();
@@ -95,13 +95,14 @@ export default class Search extends React.Component {
             <View style={styles.separator} />
         );
     };
-    
+
     render() {
         const spinner = this.state.isLoading ?
             <ActivityIndicator size='large' /> : null;
         return (
             <View style={styles.itemContainer}>
                 <Text style={styles.description}>Search for a Comic Book</Text>
+                <View style={styles.lineSeparator}></View>
                 <View style={styles.flowRight}>
                     <Icon name='search' size={30} color='#4a4948' />
                     <TextInput

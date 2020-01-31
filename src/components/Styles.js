@@ -64,5 +64,11 @@ export default StyleSheet.create({
         textAlign: "center",
         alignSelf: "center",
     },
+    lineSeparator: {
+        height: 2,
+        width: "60%",
+        backgroundColor: "#4a4948",
+        marginTop: 5
+    }
 
 });

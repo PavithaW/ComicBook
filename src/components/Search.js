@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View, StyleSheet, TouchableHighlight, TextInput, FlatList, ActivityIndicator } from 'react-native';
 import Icon from 'react-native-vector-icons/EvilIcons';
-import styles from '../Styles'
+import styles from './Styles'
 
 var comicResponseArray = [];
 
@@ -38,15 +38,6 @@ export default class Search extends React.Component {
                 console.error(error);
             });
     }
-
-    _handleOnSearchTextChange = async event => {
-        await this.setState({
-            searchString: event
-        });
-
-        await this.searchFilterFunction();
-    }
-
     _handleOnSearchTextChange = async event => {
         await this.setState({
             searchString: event
@@ -57,7 +48,7 @@ export default class Search extends React.Component {
     _handleOnSubmit = () => {
         this._searchFilterFunction(10);
     }
-    _searchFilterFunction = (count) => {
+    _searchFilterFunction = resultsSize => {
         const {
             searchString,
         } = this.state
@@ -75,13 +66,16 @@ export default class Search extends React.Component {
                     message: 'No Result Found.',
                 });
             } else {
-                newData = newData.slice(0, count);
+                newData = newData.slice(0, resultsSize);
                 this.setState({
                     message: '',
                     dataSource: newData
                 });
             }
         }
+        this.setState({
+            dataSource: newData
+        });
     }
     _onPressItem = (index, item) => {
         this.props.navigation.navigate('BookDetails', { item: item });

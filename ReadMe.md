@@ -16,7 +16,7 @@ This repository contains the source code for Comic Book Search app
 
 ### Prerequisites
 
-install Node.js to the computer. Link:https://nodejs.org/en/download/
+install Node.js to the computer. Link: https://nodejs.org/en/download/
 install expo-cli
 
 ### Installing
